@@ -1,0 +1,35 @@
+﻿@using System.Security.Claims
+@inherits LayoutComponentBase
+
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    @DisplayName(context.User.Claims.ToList())
+                </Authorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+
+@code{
+
+    private string DisplayName(List<Claim> claims)
+    {
+        var firstName = claims.Where(_ => _.Type == ClaimTypes.GivenName).Select(_ => _.Value).FirstOrDefault();
+        var lastName = claims.Where(_ => _.Type == ClaimTypes.Surname).Select(_ => _.Value).FirstOrDefault();
+
+        return $"{firstName} {lastName}";
+    }
+}
