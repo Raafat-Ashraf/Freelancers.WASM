@@ -1,0 +1,142 @@
+﻿@page "/signup"
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAccountManagement AccountManagement
+@inject NavigationManager Navigation
+
+<div class="d-flex flex-column flex-root">
+	<!--begin::Page bg image-->
+	<style>
+		body {
+			background-image: url('/assets/Images/bg10.jpeg');
+		}
+	</style>
+	<!--end::Page bg image-->
+	<!--begin::Authentication - Sign-in -->
+	<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+		<!--begin::Aside-->
+		<div class="d-flex flex-lg-row-fluid">
+			<!--begin::Content-->
+			<div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
+				<!--begin::Image-->
+				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px " src="/assets/images/Sign up-bro.svg" alt="" />				
+				<!--end::Image-->
+				<!--begin::Title-->
+				<h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Freelancers</h1>
+				<!--end::Title-->
+				<!--begin::Text-->
+				<div class="text-gray-600 fs-base text-center fw-semibold">
+					In this kind of post,
+					<a href="#" class="opacity-75-hover text-primary me-1">the blogger</a>introduces a person they’ve interviewed
+					<br />and provides some background information about
+					<a href="#" class="opacity-75-hover text-primary me-1">the interviewee</a>and their
+					<br />work following this is a transcript of the interview.
+				</div>
+				<!--end::Text-->
+			</div>
+			<!--end::Content-->
+		</div>
+		<!--begin::Aside-->
+		<!--begin::Body-->
+		<div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
+			<!--begin::Wrapper-->
+			<div class="bg-body d-flex flex-center rounded-4 w-md-600px p-10">
+				<!--begin::Content-->
+				<div class="w-md-500px">
+
+					<!--begin::Form-->
+                    <EditForm  Model="Model" OnValidSubmit="RegisterAsync">
+                        <DataAnnotationsValidator />
+
+                        <!-- Begin::Heading -->
+                        <div class="text-center mb-11">
+                            <img src="default-monochrome.svg" class="w-300px h-200px " />
+                            <h1 class="text-dark fw-bolder mb-3">Sign Up</h1>
+                        </div>
+                        <!-- End::Heading -->
+                        <!-- Begin::Input group for First and Last Name -->
+                        <div class="mb-4 d-flex gap-3">
+                            <div class="form-floating flex-grow-1">
+                                <InputText @bind-Value="Model!.FirstName" class="form-control rounded-2 bg-gray" id="firstName" placeholder="" />
+                                <label for="firstName">First Name</label>
+                                <ValidationMessage For="()=> Model.FirstName" />
+                            </div>
+                            <div class="form-floating flex-grow-1">
+                                <InputText @bind-Value="Model!.LastName" class="form-control rounded-2 bg-gray" id="lastName" placeholder="" />
+                                <label for="lastName">Last Name</label>
+                                <ValidationMessage For="()=> Model.LastName" />
+                            </div>
+                        </div>
+                        <!-- End::Input group for First and Last Name -->
+                        <!-- Begin::Input groups for Email, Password, and Confirm Password -->
+                        <div class="form-floating mb-4">
+                            <InputText @bind-Value="Model!.Email" class="form-control rounded-2 bg-gray" id="email" type="email" placeholder="" />
+                            <label for="email">Email</label>
+                            <ValidationMessage For="()=> Model.Email" />
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <InputText @bind-Value="Model!.Password" class="form-control rounded-2 bg-gray" id="password" type="password" placeholder="" />
+                            <label for="password">Password</label>
+                            <ValidationMessage For="()=> Model.Password" />
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <InputText @bind-Value="Model!.ConfirmPassword" class="form-control rounded-2 bg-gray" id="confirmPassword" type="password" placeholder="" />
+                            <label for="confirmPassword">Confirm Password</label>
+                            <ValidationMessage For="()=> Model.ConfirmPassword" />
+                        </div>
+                        <!-- End::Input groups for Email, Password, and Confirm Password -->
+                        
+
+                        @* <div class="col-12 @(errorList.Any()?string.Empty : "d-none")">
+                            <div class="alert alert-danger">
+                                @foreach (var error in errorList)
+                                {
+                                    <span>@error</span>
+                                }
+                            </div>
+                        </div> *@
+
+                        @if(errorList.Any())
+                        {
+                            <div class="col-12">
+                                 <div class="alert alert-danger" >
+                                     @foreach (var error in errorList)
+                                     {
+                                         <span>@error</span>
+                                     }
+                                 </div>
+                             </div>
+                        }
+
+
+                        <!-- Begin::Submit button -->
+                        <div class="d-grid mb-10">
+                            <button type="submit" class="btn btn-primary" disabled="@IsProcessing" >
+                                @if (IsProcessing)
+                                {
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                }
+                                <span class="indicator-label">Sign Up</span>
+                            </button>
+                        </div>
+                        <!-- End::Submit button -->
+
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                You have an account?
+                                <NavLink class="text-none" href="/login">Sign In</NavLink>
+                            </p>
+                        </div>
+                    </EditForm>
+					<!--end::Form-->
+				</div>
+				<!--end::Content-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Body-->
+	</div>
+	<!--end::Authentication - Sign-in-->
+</div>

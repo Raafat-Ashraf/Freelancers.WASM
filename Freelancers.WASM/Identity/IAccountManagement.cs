@@ -6,7 +6,7 @@ public interface IAccountManagement
 {
     Task<AuthResult> LoginAsync(LoginModel credentials);
 
-    /*Task<AuthResult> RegisterAsync(string email, string password);
+    Task<AuthResult> RegisterAsync(RegisterModel model);
 
-    Task LogoutAsync();*/
+    // Task LogoutAsync();
 }

@@ -1,23 +1,20 @@
 ﻿using Freelancers.WASM.Extensions;
 using Freelancers.WASM.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Freelancers.WASM.Pages.Account;
 
-public partial class Login
+public partial class SignUp
 {
+
     [SupplyParameterFromForm]
-    private LoginModel? Model { get; set; }
-
-
-    [SupplyParameterFromQuery(Name = "IsNew")]
-    private bool IsNew { get; set; }
-
-
+    private RegisterModel? Model { get; set; }
 
     private string[] errorList = [];
 
     public bool IsProcessing { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -30,17 +27,22 @@ public partial class Login
 
 
 
-    private async Task LoginAsync()
+    private async Task RegisterAsync()
     {
         IsProcessing = true;
 
-        var result = await AccountManagement.LoginAsync(Model!);
+        var result = await AccountManagement.RegisterAsync(Model!);
 
         if (result.Succeeded)
-            Navigation.NavigateTo("/");
+        {
+            Navigation.NavigateTo("/login?isNew=true");
+        }
         else
+        {
             errorList = result.ErrorList;
+        }
 
         IsProcessing = false;
+
     }
 }

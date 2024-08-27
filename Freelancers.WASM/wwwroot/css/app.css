@@ -118,7 +118,8 @@ code {
 }
 
 .bg-gray {
-    background-color: #ebf1f7
+    /*    background-color: #ebf1f7;*/
+    background-color: #f0f0f0;
 }
 
 .form-control.bg-gray:focus {
@@ -158,4 +159,23 @@ code {
 .fa {
     margin-left: -12px;
     margin-right: 8px;
+}
+
+
+
+
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    backdrop-filter: blur(5px); /* Apply blur effect to the background */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Optional: subtle border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional: shadow to make it stand out */
+}
+
+.background-image {
+    background-image: url('/wallpaperflare.com_wallpaper.jpg'); /* Replace with the path to your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Optional: Adjust to fit the viewport height */
 }
