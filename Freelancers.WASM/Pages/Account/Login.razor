@@ -83,7 +83,7 @@
 						<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 							<div></div>
 							<!--begin::Link-->
-							<a asp-page="./ForgotPassword" class="link-primary">Forgot Password?</a>
+							<a href="/forget-password" class="link-primary">Forgot Password?</a>
 							<!--end::Link-->
 						</div>
 						<!--end::Wrapper-->
@@ -101,7 +101,17 @@
 							<div class="alert alert-danger">
 								@foreach (var error in errorList)
 								{
-									<span>@error</span>
+									if (error == "Email is not confirmed")
+									{
+										<span>
+											@error,
+											<button class="btn btn-link  btn-sm " @onclick="ResendConfirmationEmailAsync">resend confirmation email</button>
+										</span>
+									}
+									else
+									{
+										<span>@error</span>
+									}
 								}
 							</div>
 						</div>

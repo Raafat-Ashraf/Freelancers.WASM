@@ -70,7 +70,6 @@ public class CustomAuthProvider(ILocalStorageService _localStorageService,
             credentials.Password,
         });
 
-
         if (response.IsSuccessStatusCode)
         {
 
@@ -131,11 +130,100 @@ public class CustomAuthProvider(ILocalStorageService _localStorageService,
     }
 
 
+    public async Task<AuthResult> ForgetPasswordAsync(string email)
+    {
 
-    /*var jwtToken = await _localStorageService.GetItemAsync<string>("jwt-access-token");
-                var claims = ParseClaimsFromJwt(jwtToken!);
-                user = new ClaimsPrincipal(new ClaimsIdentity(claims, "JwtAuth"));*/
+        var response = await _httpClient.PostAsJsonAsync("Auth/forget-password", new
+        {
+            email
+        });
 
+        if (response.IsSuccessStatusCode)
+        {
+            return new AuthResult { Succeeded = true };
+        }
+
+        var details = await response.Content.ReadAsStringAsync();
+        var errors = ExtractErrors(details);
+
+        return new()
+        {
+            Succeeded = false,
+            ErrorList = [.. errors]
+        };
+    }
+
+
+
+    public async Task<AuthResult> ResendConfirmationEmailAsync(string email)
+    {
+        var response = await _httpClient.PostAsJsonAsync("Auth/resend-confirmation-email", new
+        {
+            email
+        });
+
+        if (response.IsSuccessStatusCode)
+        {
+            return new AuthResult { Succeeded = true };
+        }
+
+        var details = await response.Content.ReadAsStringAsync();
+        var errors = ExtractErrors(details);
+
+        return new()
+        {
+            Succeeded = false,
+            ErrorList = [.. errors]
+        };
+    }
+
+
+    public async Task<AuthResult> ConfirmPasswordAsync(string userId, string code)
+    {
+        var response = await _httpClient.PostAsJsonAsync("Auth/confirm-email", new
+        {
+            userId,
+            code
+        });
+
+        if (response.IsSuccessStatusCode)
+        {
+            return new AuthResult { Succeeded = true };
+        }
+
+        var details = await response.Content.ReadAsStringAsync();
+        var errors = ExtractErrors(details);
+
+        return new()
+        {
+            Succeeded = false,
+            ErrorList = [.. errors]
+        };
+    }
+
+    public async Task<AuthResult> ResetPasswordAsync(ResetPasswordModel model)
+    {
+        var response = await _httpClient.PostAsJsonAsync("Auth/reset-password", new
+        {
+            model.Email,
+            model.Code,
+            model.NewPassword
+        });
+
+        if (response.IsSuccessStatusCode)
+        {
+            return new AuthResult { Succeeded = true };
+        }
+
+        var details = await response.Content.ReadAsStringAsync();
+        var errors = ExtractErrors(details);
+
+        return new()
+        {
+            Succeeded = false,
+            ErrorList = [.. errors]
+        };
+    }
 
 
     private List<string> ExtractErrors(string details)

@@ -1,0 +1,31 @@
+﻿@page "/confirmEmail"
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAccountManagement AccountManagement
+@inject NavigationManager Navigation
+
+
+
+@if (IsEmailConfirmed)
+{
+    <div class="mt-15 row text-center justify-content-center ">
+        <div class="col-8 alert alert-success">
+            <span>Email confirmed successfully</span>
+        </div>
+    </div>
+}
+
+@if(errorList.Any())
+{
+    <div class="mt-15 row text-center justify-content-center ">
+        <div class=" col-8 alert alert-danger">
+            @foreach (var error in errorList)
+            {
+                <span>@error</span>
+            }
+        </div>
+    </div>
+
+}
+
+

@@ -4,20 +4,18 @@ using Microsoft.AspNetCore.Components;
 
 namespace Freelancers.WASM.Pages.Account;
 
-public partial class Login
+public partial class ForgetPassword
 {
     [SupplyParameterFromForm]
-    private LoginModel? Model { get; set; }
-
-
-    [SupplyParameterFromQuery(Name = "IsNew")]
-    private bool IsNew { get; set; }
-
-
+    public ForgePasswordModel? Model { get; set; }
 
     private string[] errorList = [];
 
+    public bool IsSend { get; set; }
+
     public bool IsProcessing { get; set; }
+
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -28,14 +26,14 @@ public partial class Login
 
     }
 
-    private async Task LoginAsync()
+    private async Task ForgetPasswordAsync()
     {
         IsProcessing = true;
 
-        var result = await AccountManagement.LoginAsync(Model!);
+        var result = await AccountManagement.ForgetPasswordAsync(Model!.Email);
 
         if (result.Succeeded)
-            Navigation.NavigateTo("/");
+            IsSend = true;
         else
             errorList = result.ErrorList;
 
@@ -43,10 +41,15 @@ public partial class Login
     }
 
 
-
     private async Task ResendConfirmationEmailAsync()
     {
         IsProcessing = false;
-        await AccountManagement.ResendConfirmationEmailAsync(Model!.Email);
+        var result = await AccountManagement.ResendConfirmationEmailAsync(Model!.Email);
+
+        if (result.Succeeded)
+            IsSend = true;
+        else
+            errorList = result.ErrorList;
     }
+
 }
