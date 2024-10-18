@@ -11,14 +11,14 @@ public partial class SignUp
     [SupplyParameterFromForm]
     private RegisterModel? Model { get; set; }
 
-    private string[] errorList = [];
+    private string[] _errorList = [];
 
     public bool IsProcessing { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        Model ??= new();
+        Model ??= new RegisterModel();
 
         if (await AuthenticationStateProvider.UserIsAuthenticated())
             Navigation.NavigateTo("/");
@@ -39,7 +39,7 @@ public partial class SignUp
         }
         else
         {
-            errorList = result.ErrorList;
+            _errorList = result.ErrorList;
         }
 
         IsProcessing = false;

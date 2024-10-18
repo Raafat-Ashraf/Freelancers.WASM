@@ -98,11 +98,11 @@
                             </div>
                         </div> *@
 
-                        @if(errorList.Any())
+                        @if(_errorList.Any())
                         {
                             <div class="col-12">
                                  <div class="alert alert-danger" >
-                                     @foreach (var error in errorList)
+                                     @foreach (var error in _errorList)
                                      {
                                          <span>@error</span>
                                      }

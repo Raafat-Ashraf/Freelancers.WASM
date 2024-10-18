@@ -1,5 +1,6 @@
 ﻿using Freelancers.WASM.Extensions;
 using Freelancers.WASM.Models;
+using Freelancers.WASM.Pages.Account.Validators;
 using Microsoft.AspNetCore.Components;
 
 namespace Freelancers.WASM.Pages.Account;
@@ -28,8 +29,18 @@ public partial class Login
 
     }
 
+    public string EmailValidation { get; set; } = string.Empty;
     private async Task LoginAsync()
     {
+        var validator = new LoginModelValidator();
+        var validationResult = await validator.ValidateAsync(Model);
+        if (!validationResult.IsValid)
+        {
+            EmailValidation = validationResult.Errors.FirstOrDefault()?.ErrorMessage!;
+            return;
+        }
+
+
         IsProcessing = true;
 
         var result = await AccountManagement.LoginAsync(Model!);

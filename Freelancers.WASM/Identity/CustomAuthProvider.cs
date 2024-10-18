@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Freelancers.WASM.Models;
+using Freelancers.WASM.Models.Profile;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
 using System.Security.Claims;
@@ -223,6 +224,13 @@ public class CustomAuthProvider(ILocalStorageService _localStorageService,
             Succeeded = false,
             ErrorList = [.. errors]
         };
+    }
+
+    public async Task<ProfileResponseModel> GetUserProfile()
+    {
+        var response = await _httpClient.GetFromJsonAsync<ProfileResponseModel>("account");
+
+        return response;
     }
 
 
